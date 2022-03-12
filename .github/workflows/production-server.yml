@@ -5,17 +5,17 @@ on:
   workflow_dispatch:
 
 jobs:
-
   build:
     runs-on: azure
     steps:
-    - uses: actions/checkout@v2
-      with:
-        submodules: 'recursive'
-        token: ${{ secrets.GH_TOKEN }}
+      - uses: actions/checkout@v2
+        with:
+          submodules: "recursive"
+          token: ${{ secrets.GH_TOKEN }}
 
-    - name: Build and Run Docker
-      run: |
-        docker-compose build
-        docker-compose down
-        docker-compose up -d
+      - name: Build and Run Docker
+        run: |
+          sed -i 's,http://localhost:9000,https://cs261.mooody.me/,g' ./docker-compose.yml
+          docker-compose build
+          docker-compose down
+          docker-compose up -d

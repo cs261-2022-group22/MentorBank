@@ -26,7 +26,7 @@ services:
       - POSTGRES_PASSWORD=Umc3d1dFbGZyTlRxb3BuWjRGMVdxY2YwWCs5eXB
       - POSTGRES_DB=mentoring
     expose:
-      - '5432'
+      - 5432
     volumes:
       - db-volume:/var/lib/postgresql/data
       - ./database/schema.sql:/docker-entrypoint-initdb.d/10-schema.sql
@@ -61,7 +61,7 @@ services:
       context: backend
       dockerfile: ../dockerfiles/backend.meeting.Dockerfile
     expose:
-      - "50051"
+      - 50051
     networks:
       - mentorbank-network
       - mentorbank-db-network
@@ -78,7 +78,7 @@ services:
       context: backend
       dockerfile: ../dockerfiles/backend.matching.Dockerfile
     expose:
-      - "50051"
+      - 50051
     networks:
       - mentorbank-network
       - mentorbank-db-network
