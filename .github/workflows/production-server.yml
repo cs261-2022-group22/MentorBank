@@ -16,6 +16,6 @@ jobs:
       - name: Build and Run Docker
         run: |
           sed -i 's,http://localhost:9000,https://cs261.mooody.me/,g' ./docker-compose.yml
-          docker-compose build
           docker-compose down
+          docker-compose build
           docker-compose up -d
