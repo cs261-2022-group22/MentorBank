@@ -1,0 +1,133 @@
+name: mentorbank
+
+x-backend-common-environment-variables:
+  &backend-common-variables
+  POSTGRES_HOST: postgres
+  POSTGRES_USER: mentoring
+  POSTGRES_PASSWORD: Umc3d1dFbGZyTlRxb3BuWjRGMVdxY2YwWCs5eXB
+  POSTGRES_DATABASE: mentoring
+
+services:
+  postgres-db:
+    image: postgres:latest
+    hostname: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=mentoring
+      - POSTGRES_PASSWORD=Umc3d1dFbGZyTlRxb3BuWjRGMVdxY2YwWCs5eXB
+      - POSTGRES_DB=mentoring
+    expose:
+      - '5432'
+    volumes:
+      - db-volume:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/10-schema.sql
+      - ./database/initial-data.sql:/docker-entrypoint-initdb.d/20-initial-data.sql
+    networks:
+      - mentorbank-db-network
+
+  account-server:
+    image: account-server
+    hostname: account
+    environment:
+      <<: *backend-common-variables
+      ACCOUNT_SERVICE_ADDRESS: "0.0.0.0"
+    build:
+      context: backend
+      dockerfile: ../dockerfiles/backend.account.Dockerfile
+    expose:
+      - 50051
+    networks:
+      - mentorbank-network
+      - mentorbank-db-network
+    depends_on:
+      - postgres-db
+
+  meeting-server:
+    image: meeting-server
+    hostname: meeting
+    environment:
+      <<: *backend-common-variables
+      MEETING_SERVICE_ADDRESS: "0.0.0.0"
+    build:
+      context: backend
+      dockerfile: ../dockerfiles/backend.meeting.Dockerfile
+    expose:
+      - "50051"
+    networks:
+      - mentorbank-network
+      - mentorbank-db-network
+    depends_on:
+      - postgres-db
+
+  matching-server:
+    image: matching-server
+    hostname: matching
+    environment:
+      <<: *backend-common-variables
+      MATCHING_SERVICE_ADDRESS: "0.0.0.0"
+    build:
+      context: backend
+      dockerfile: ../dockerfiles/backend.matching.Dockerfile
+    expose:
+      - "50051"
+    networks:
+      - mentorbank-network
+      - mentorbank-db-network
+    depends_on:
+      - postgres-db
+
+  feedback-server:
+    image: feedback
+    hostname: feedback
+    environment:
+      <<: *backend-common-variables
+      FEEDBACK_SERVICE_ADDRESS: "0.0.0.0"
+    build:
+      context: backend
+      dockerfile: ../dockerfiles/backend.feedback.Dockerfile
+    expose:
+      - 50051
+    networks:
+      - mentorbank-network
+      - mentorbank-db-network
+    depends_on:
+      - postgres-db
+
+  frontend:
+    image: frontend
+    hostname: frontend
+    build:
+      context: frontend
+      dockerfile: ../dockerfiles/frontend.Dockerfile
+    environment:
+      NODE_ENV: production
+      GRPC_ACCOUNT_BACKEND_ADDRESS: "account:50051"
+      GRPC_MATCHING_BACKEND_ADDRESS: "matching:50051"
+      GRPC_MEETING_BACKEND_ADDRESS: "meeting:50051"
+      GRPC_FEEDBACK_BACKEND_ADDRESS: "feedback:50051"
+
+      # Replace with your own hostname
+      NEXTAUTH_URL: "http://localhost:9000"
+
+      # Replace with your own secrets
+      JWT_SECRET: "6a0480fa6fb890282d1537939e28b57517970059b6f61889a0b7eacff6698e41"
+      NEXTAUTH_SECRET: "R8x0XHvh1S181l1XsIug3EcSAvhVW9cOHfdkucIeGaU="
+      API_SECRET_KEY: "146c55cc786e5a0861087e16ce062e6b8e6b38d3e5276ebc62fa9b2596c17fd6"
+    ports:
+      - 9000:9000
+    networks:
+      - mentorbank-network
+    depends_on:
+      - account-server
+      - matching-server
+      - meeting-server
+      - feedback-server
+
+volumes:
+  db-volume:
+    name: cs261-db
+    driver: local
+
+networks:
+  mentorbank-network:
+  mentorbank-db-network:

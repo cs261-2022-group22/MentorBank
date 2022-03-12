@@ -4,3 +4,6 @@
 [submodule "backend"]
 	path = backend
 	url = https://github.com/cs261-2022-group22/grpc-backend
+[submodule "database"]
+	path = database
+	url = https://github.com/cs261-2022-group22/postgresql-schema
