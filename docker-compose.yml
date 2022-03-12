@@ -1,4 +1,4 @@
-name: mentorbank
+version: '3.8'
 
 x-backend-common-environment-variables:
   &backend-common-variables
@@ -6,6 +6,15 @@ x-backend-common-environment-variables:
   POSTGRES_USER: mentoring
   POSTGRES_PASSWORD: Umc3d1dFbGZyTlRxb3BuWjRGMVdxY2YwWCs5eXB
   POSTGRES_DATABASE: mentoring
+
+volumes:
+  db-volume:
+    name: cs261-db
+    driver: local
+
+networks:
+  mentorbank-network:
+  mentorbank-db-network:
 
 services:
   postgres-db:
@@ -122,12 +131,3 @@ services:
       - matching-server
       - meeting-server
       - feedback-server
-
-volumes:
-  db-volume:
-    name: cs261-db
-    driver: local
-
-networks:
-  mentorbank-network:
-  mentorbank-db-network:
