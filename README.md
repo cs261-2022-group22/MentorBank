@@ -1,6 +1,6 @@
 # MentorBank
 
-This repository contains the entire codebase for the frontend, the backend and database schemas of the mentoring platform,
+This repository contains the entire codebase for the frontend, the backend and database schemas/initial-data of the mentoring platform,
 MentorBank, made by group22 as a CS261 group work.
 
 Group Members (sorted alphabetically):
