@@ -34,32 +34,6 @@ services:
     networks:
       - mentorbank-db-network
 
-  cron-machine-learning:
-    image: cron-ml
-    hostname: machine-learning
-    environment:
-      <<: *backend-common-variables
-    build:
-      context: backend
-      dockerfile: ../dockerfiles/cron.machine-learning.Dockerfile
-    networks:
-      - mentorbank-db-network
-    depends_on:
-      - postgres-db
-
-  cron-polling:
-    image: cron-polling
-    hostname: polling
-    environment:
-      <<: *backend-common-variables
-    build:
-      context: backend
-      dockerfile: ../dockerfiles/cron.polling.Dockerfile
-    networks:
-      - mentorbank-db-network
-    depends_on:
-      - postgres-db
-
   account-server:
     image: account-server
     hostname: account
@@ -128,6 +102,32 @@ services:
       - 50051
     networks:
       - mentorbank-network
+      - mentorbank-db-network
+    depends_on:
+      - postgres-db
+
+  cron-machine-learning:
+    image: cron-ml
+    hostname: machine-learning
+    environment:
+      <<: *backend-common-variables
+    build:
+      context: backend
+      dockerfile: ../dockerfiles/cron.machine-learning.Dockerfile
+    networks:
+      - mentorbank-db-network
+    depends_on:
+      - postgres-db
+
+  cron-polling:
+    image: cron-polling
+    hostname: polling
+    environment:
+      <<: *backend-common-variables
+    build:
+      context: backend
+      dockerfile: ../dockerfiles/cron.polling.Dockerfile
+    networks:
       - mentorbank-db-network
     depends_on:
       - postgres-db
