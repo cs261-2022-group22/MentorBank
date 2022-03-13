@@ -136,10 +136,10 @@ services:
       dockerfile: ../dockerfiles/frontend.Dockerfile
     environment:
       NODE_ENV: production
-      GRPC_ACCOUNT_BACKEND_ADDRESS: "account:50051"
-      GRPC_MATCHING_BACKEND_ADDRESS: "matching:50051"
-      GRPC_MEETING_BACKEND_ADDRESS: "meeting:50051"
-      GRPC_FEEDBACK_BACKEND_ADDRESS: "feedback:50051"
+      GRPC_ACCOUNT_BACKEND_ADDRESS: "account-server:50051"
+      GRPC_MATCHING_BACKEND_ADDRESS: "matching-server:50051"
+      GRPC_MEETING_BACKEND_ADDRESS: "meeting-server:50051"
+      GRPC_FEEDBACK_BACKEND_ADDRESS: "feedback-server:50051"
 
       # Replace with your own hostname
       NEXTAUTH_URL: "http://localhost:9000"
