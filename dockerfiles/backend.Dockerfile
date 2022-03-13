@@ -14,5 +14,3 @@ RUN bash -c "python -m grpc_tools.protoc -I./common/ --python_betterproto_out=./
 # For more info, please refer to https://aka.ms/vscode-docker-python-configure-containers
 RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app
 USER appuser
-
-CMD ["python", "./account_server.py"]

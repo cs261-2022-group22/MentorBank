@@ -68,7 +68,8 @@ services:
       ACCOUNT_SERVICE_ADDRESS: "0.0.0.0"
     build:
       context: backend
-      dockerfile: ../dockerfiles/backend.account.Dockerfile
+      dockerfile: ../dockerfiles/backend.Dockerfile
+    command: python ./account_server.py
     expose:
       - 50051
     networks:
@@ -85,7 +86,8 @@ services:
       MEETING_SERVICE_ADDRESS: "0.0.0.0"
     build:
       context: backend
-      dockerfile: ../dockerfiles/backend.meeting.Dockerfile
+      dockerfile: ../dockerfiles/backend.Dockerfile
+    command: python ./meeting_server.py
     expose:
       - 50051
     networks:
@@ -102,7 +104,8 @@ services:
       MATCHING_SERVICE_ADDRESS: "0.0.0.0"
     build:
       context: backend
-      dockerfile: ../dockerfiles/backend.matching.Dockerfile
+      dockerfile: ../dockerfiles/backend.Dockerfile
+    command: python ./matching_server.py
     expose:
       - 50051
     networks:
@@ -119,7 +122,8 @@ services:
       FEEDBACK_SERVICE_ADDRESS: "0.0.0.0"
     build:
       context: backend
-      dockerfile: ../dockerfiles/backend.feedback.Dockerfile
+      dockerfile: ../dockerfiles/backend.Dockerfile
+    command: python ./feedback_server.py
     expose:
       - 50051
     networks:

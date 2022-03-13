@@ -1,14 +1,6 @@
-FROM python:3.10-slim
+FROM account-server AS BaseLayer
 
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-
-WORKDIR /app
-COPY . /app
-
-ENV PATH="/home/appuser/.local/bin:$PATH"
-RUN bash -c "python -m pip install -r requirements.txt"
-RUN bash -c "python -m grpc_tools.protoc -I./common/ --python_betterproto_out=./compiled_protos/ ./common/*.proto"
+USER root
 
 RUN apt-get update && apt-get install -y cron && which cron && rm -rf /etc/cron.*/*
 
