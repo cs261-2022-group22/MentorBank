@@ -118,6 +118,7 @@ services:
       - mentorbank-db-network
     depends_on:
       - postgres-db
+      - account-server
 
   cron-polling:
     image: cron-polling
@@ -131,6 +132,7 @@ services:
       - mentorbank-db-network
     depends_on:
       - postgres-db
+      - account-server
 
   frontend:
     image: frontend
