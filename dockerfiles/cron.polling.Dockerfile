@@ -1,4 +1,14 @@
-FROM account-server AS BaseLayer
+FROM python:3.10-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+WORKDIR /app
+COPY . /app
+
+ENV PATH="/home/appuser/.local/bin:$PATH"
+RUN bash -c "python -m pip install -r requirements.txt"
+RUN bash -c "python -m grpc_tools.protoc -I./common/ --python_betterproto_out=./compiled_protos/ ./common/*.proto"
 
 USER root
 
