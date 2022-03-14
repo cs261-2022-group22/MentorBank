@@ -33,7 +33,7 @@ each of the 4 backend containers is connected to two different networks:
 1. `mentorbank-network`: Network between backend gRPC server to the frontend `Node.JS` server.
 2. `mentorbank-db-network`: Network between backend gRPC server to the database.
 
-Within one network, containers are able to communicate with each other, so two networks are separated to ensure an enhanced security, 
+Within one network, containers are able to communicate with each other, so two networks are separated to ensure an enhanced security,
 preventing illicit access to the database from the frontend side.
 
 The rest 2 cron-based instances are only connected to the `mentorbank-db-network`, because their functionality is to maintain database
@@ -50,9 +50,10 @@ The code is self-contained, by using correct docker commands it will download re
 automatically.
 
 1. Open `docker-compose.yml` and change corresponding fields:
+
    - Change `NEXTAUTH_URL` to your hosting URL
    - Change `JWT_SECRET`, `NEXTAUTH_SECRET` and `API_SECRET_KEY` to randomly generated strings.
- 
+
      You can generate one using `openssl rand -hex 32`
 
 2. To make sure the permission is correct, you should run `chmod a+r ./database/*.sql` if these files are not global-readable.
