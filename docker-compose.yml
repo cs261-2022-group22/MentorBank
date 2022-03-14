@@ -53,6 +53,7 @@ services:
       - postgres-db
     deploy:
       restart_policy:
+        condition: on-failure
         window: 30s
 
   meeting-server:
@@ -74,6 +75,7 @@ services:
       - postgres-db
     deploy:
       restart_policy:
+        condition: on-failure
         window: 30s
 
   matching-server:
@@ -95,6 +97,7 @@ services:
       - postgres-db
     deploy:
       restart_policy:
+        condition: on-failure
         window: 30s
 
   feedback-server:
@@ -116,6 +119,7 @@ services:
       - postgres-db
     deploy:
       restart_policy:
+        condition: on-failure
         window: 30s
 
   cron-machine-learning:
