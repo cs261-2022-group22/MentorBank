@@ -21,14 +21,15 @@ RUN echo "#!/bin/sh \n\
 
 RUN chmod +x /entrypoint.sh
 
+RUN echo "" > "/etc/cron.d/ml"
+
+# Run at the start
+RUN echo '@reboot      bash -c "sleep 30 && cd /app && echo Processing Pending Rating && /usr/local/bin/python -m machine_learning ProcessPendingRating && echo Updating Models && /usr/local/bin/python -m machine_learning UpdateModels " >/proc/1/fd/1 2>/proc/1/fd/2' >> "/etc/cron.d/ml"
+
 # Every 30th minute
-RUN echo '*/30 * * * * bash -c "cd /app && \
-    echo Process Pending Rating && \
-    /usr/local/bin/python -m machine_learning ProcessPendingRating && \
-    echo Updating Models && \
-    /usr/local/bin/python -m machine_learning UpdateModels \
-    " >/proc/1/fd/1 2>/proc/1/fd/2' > "/etc/cron.d/polling"
-RUN chmod 0644 "/etc/cron.d/polling" && crontab "/etc/cron.d/polling"
+RUN echo '*/30 * * * * bash -c "cd /app && echo Processing Pending Rating && /usr/local/bin/python -m machine_learning ProcessPendingRating && echo Updating Models && /usr/local/bin/python -m machine_learning UpdateModels " >/proc/1/fd/1 2>/proc/1/fd/2' >> "/etc/cron.d/ml"
+
+RUN chmod 0644 "/etc/cron.d/ml" && crontab "/etc/cron.d/ml"
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["cron","-f", "-l", "2"]
