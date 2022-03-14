@@ -1,7 +1,7 @@
 # MentorBank
 
 This repository contains the entire codebase for the frontend, the backend and database schemas/initial-data of the mentoring platform,
-MentorBank, made by group22 as a CS261 group work.
+MentorBank, made by Group22 as a CS261 group work.
 
 Group Members (sorted alphabetically):
 
@@ -20,7 +20,7 @@ Group Members (sorted alphabetically):
 The main file is `docker-compose.yml`, where all components of the MentorBank are defined, majorly 3 submodules, `backend`,
 `database` and `frontend`. These correspond to the actural project structure.
 
-In the `dockerfiles/` there are several `.Dockerfile` files, they are Docker configurations for each containers.
+In the `dockerfiles/` there are several docker configuration files, they are Docker configurations for each containers.
 
 In `examples/`, there is one `nginx-reverse-proxy-tls.conf` demonstrating how to configure Nginx TLS reverse proxy to secure
 your installation.
@@ -55,18 +55,17 @@ automatically.
  
      You can generate one using `openssl rand -hex 32`
 
-2. To make sure the permission is correct, you should run `chmod a+rw ./database/*.sql` if these files are not global-readable.
+2. To make sure the permission is correct, you should run `chmod a+r ./database/*.sql` if these files are not global-readable.
 3. Run `docker-compose build` in the repository root directory, to build the containers.
 4. Run `docker-compose up` to start the containers for the first time.
 
    **Note: When it's the first time to start the container, the database container will do**
-   **initialisations, causing backends failures when they're trying to connect to the DB**
+   **initialisation, causing backend failures when they're trying to connect to the DB**
    **at this time, producing error messages.**
 
-   When this happens, stop and restart the container will fix the problem, since the database is
-   fully initialised now.
+   This is fine for the first time startup, the gRPC backend containers will restart every 5 seconds if they fail, reconnect to DB.
 
-5. The web server is now accessible via [`http://localhost:9000/`](http://localhost:9000/), to configure TLS for secure
+5. The website is now accessible via [`http://localhost:9000/`](http://localhost:9000/). To configure TLS for secure
    connections you'll need a reverse proxy engine, which could be Nginx, Apache, Caddy or any web server which supports this.
 
    There has been an example Nginx configuration file in `example/`.
