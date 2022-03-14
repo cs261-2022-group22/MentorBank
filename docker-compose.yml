@@ -51,6 +51,9 @@ services:
       - mentorbank-db-network
     depends_on:
       - postgres-db
+    deploy:
+      restart_policy:
+        window: 30s
 
   meeting-server:
     image: meeting-server
@@ -69,6 +72,9 @@ services:
       - mentorbank-db-network
     depends_on:
       - postgres-db
+    deploy:
+      restart_policy:
+        window: 30s
 
   matching-server:
     image: matching-server
@@ -87,6 +93,9 @@ services:
       - mentorbank-db-network
     depends_on:
       - postgres-db
+    deploy:
+      restart_policy:
+        window: 30s
 
   feedback-server:
     image: feedback-server
@@ -105,6 +114,9 @@ services:
       - mentorbank-db-network
     depends_on:
       - postgres-db
+    deploy:
+      restart_policy:
+        window: 30s
 
   cron-machine-learning:
     image: cron-ml
